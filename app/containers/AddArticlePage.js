@@ -3,16 +3,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { editArticle } from '../actions/articles';
+import { addArticle } from '../actions/articles';
 import ArticleEditor from '../components/ArticleEditor';
 
-class EditArticlePage extends Component {
+class AddArticlePage extends Component {
   handleArticleChange = this.handleArticleChange.bind(this);
   handleOk = this.handleOk.bind(this);
   goBackHome = this.goBackHome.bind(this);
 
+  state = {
+    article: {
+      author: '',
+      title: ''
+    }
+  };
+
   handleOk() {
-    this.props.editArticle(this.props.article.id, this.state.article);
+    this.props.addArticle(this.state.article);
     this.goBackHome();
   }
 
@@ -24,14 +31,6 @@ class EditArticlePage extends Component {
     this.setState({
       article: changedArticle
     })
-  }
-
-  componentWillMount() {
-    this.setState({
-      article: {
-        ...this.props.article
-      }
-    });
   }
 
   render() {
@@ -46,16 +45,8 @@ class EditArticlePage extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  const articleId = parseInt(ownProps.params.articleId, 10);
-  const article = state.articles.find(article => article.id === articleId);
-  return {
-    article
-  };
-}
-
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ editArticle, push }, dispatch);
+  return bindActionCreators({ addArticle, push }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditArticlePage)
+export default connect(null, mapDispatchToProps)(AddArticlePage)

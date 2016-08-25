@@ -10,7 +10,6 @@ export default class ArticleEditor extends Component {
     });
   }
   render() {
-    console.log(this.props.article);
     const { author, title } = this.props.article;
     return (
       <div>
