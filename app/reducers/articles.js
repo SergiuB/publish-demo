@@ -9,8 +9,8 @@ export default function articles(state = [], action) {
     case EDIT_ARTICLE:
       const index = state.findIndex(article => article.id === action.articleId);
       return [
-        ...list.slice(0, index),
-        ...list.slice(index + 1),
+        ...state.slice(0, index),
+        ...state.slice(index + 1),
         {
           id: action.articleId,
           ...action.articleData
