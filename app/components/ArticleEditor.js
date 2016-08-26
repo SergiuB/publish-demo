@@ -45,6 +45,7 @@ export default class ArticleEditor extends Component {
     this.props.onChange({
       author: this._nameInput.getValue(),
       title: this._titleInput.getValue(),
+      content: this._contentInput.getValue(),
       featuredImage: this.state.featuredImage
     });
   }
@@ -70,7 +71,7 @@ export default class ArticleEditor extends Component {
   }
 
   render() {
-    const { author, title } = this.props.article;
+    const { author, title, content } = this.props.article;
     const { featuredImage } = this.state;
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
@@ -92,6 +93,15 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Title"
           value={title}
           ref={input => this._titleInput = input}
+          onChange={this.handleChange}
+        />
+        <TextField
+          hintText="Content"
+          floatingLabelText="Content"
+          multiLine={true}
+          rows={2}
+          value={content}
+          ref={input => this._contentInput = input}
           onChange={this.handleChange}
         />
         <input
