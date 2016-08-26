@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { hashHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
+import persistState from 'redux-localstorage';
 import rootReducer from '../reducers';
 
 import * as articlesActions from '../actions/articles';
@@ -21,6 +22,7 @@ const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
   applyMiddleware(thunk, router, logger),
+  persistState('articles'),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
     noop => noop

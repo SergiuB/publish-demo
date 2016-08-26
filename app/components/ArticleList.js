@@ -14,8 +14,10 @@ class ArticleList extends Component {
     const { articles } = this.props;
     const articleElement = ({ id, author, title, featuredImage }) => {
       let imageUrlSmall ;
-      if (featuredImage) {
-        imageUrlSmall = URL.createObjectURL( featuredImage.small.data );
+      if (featuredImage && featuredImage.small && featuredImage.small.data) {
+        try {
+          imageUrlSmall = featuredImage.small.data;
+        } catch(e) {}
       }
       return (
         <div key={id}>

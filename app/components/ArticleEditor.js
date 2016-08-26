@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import blobUtil from 'blob-util';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -14,10 +13,9 @@ const resizeImageWidth = (image, maxWidth) => {
   canvas
     .getContext('2d')
     .drawImage(image, 0, 0, width, height);
-  const dataUrl = canvas.toDataURL('image/jpeg');
+  const data = canvas.toDataURL('image/jpeg');
 
-  return blobUtil.dataURLToBlob(dataUrl)
-    .then(data => ({ width, height, data }));
+  return { width, height, data };
 }
 
 const getImage = (imageFile) => {
@@ -51,7 +49,7 @@ export default class ArticleEditor extends Component {
 
   handleImage(event) {
     const file = event.target.files[0];
-    const resizeImage = (image) => Promise.all([100, 150, 200].map(resizeImageWidth.bind(null, image)));
+    const resizeImage = (image) => [100, 150, 200].map(resizeImageWidth.bind(null, image));
 
     const setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
     if(file.type.match(/image.*/)) {
@@ -73,8 +71,10 @@ export default class ArticleEditor extends Component {
     const { author, title } = this.props.article;
     const { featuredImage } = this.state;
     let imageUrl ;
-    if (featuredImage) {
-      imageUrl = URL.createObjectURL( featuredImage.high.data );
+    if (featuredImage && featuredImage.med && featuredImage.med.data) {
+      try {
+        imageUrl = featuredImage.med.data;
+      } catch(e) {}
     }
     return (
       <div>
@@ -100,7 +100,7 @@ export default class ArticleEditor extends Component {
           onChange={this.handleImage}
         />
         <button type="button" onClick={this.handleAddPicture}>
-          {featuredImage ? "Change picture" : "Add picture"}
+          {imageUrl ? "Change picture" : "Add picture"}
         </button>
         {imageUrl && <img src={imageUrl} />}
       </div>
