@@ -1,30 +1,5 @@
 import React, { Component } from 'react';
-
-/* Utility function to convert a canvas to a BLOB */
-const dataURLToBlob = (dataURL) => {
-    const BASE64_MARKER = ';base64,';
-    if (dataURL.indexOf(BASE64_MARKER) == -1) {
-        const parts = dataURL.split(',');
-        const contentType = parts[0].split(':')[1];
-        const raw = parts[1];
-
-        return new Blob([raw], {type: contentType});
-    }
-
-    const parts = dataURL.split(BASE64_MARKER);
-    const contentType = parts[0].split(':')[1];
-    const raw = window.atob(parts[1]);
-    const rawLength = raw.length;
-
-    const uInt8Array = new Uint8Array(rawLength);
-
-    for (let i = 0; i < rawLength; ++i) {
-        uInt8Array[i] = raw.charCodeAt(i);
-    }
-
-    return new Blob([uInt8Array], { type: "image/jpeg" } );
-}
-/* End Utility function to convert a canvas to a BLOB      */
+import blobUtil from 'blob-util';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -40,20 +15,17 @@ const resizeImageWidth = (image, maxWidth) => {
     .getContext('2d')
     .drawImage(image, 0, 0, width, height);
   const dataUrl = canvas.toDataURL('image/jpeg');
-  const data = dataURLToBlob(dataUrl);
-  return {
-    width,
-    height,
-    data
-  };
+  return blobUtil.dataURLToBlob(dataUrl)
+    .then(data => ({ width, height, data }));
 }
 
-const processImage = (imageFile, processingFn) => {
+
+const getImage = (imageFile) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload =  (readerEvent) => {
         var image = new Image();
-        image.onload = () => resolve(processingFn(image));
+        image.onload = () => resolve(image);
         image.src = readerEvent.target.result;
     }
     reader.readAsDataURL(imageFile);
@@ -78,16 +50,12 @@ export default class ArticleEditor extends Component {
 
   handleImage(event) {
     const file = event.target.files[0];
-    // Ensure it's an image
+    const resizeImage = (image) => Promise.all([100, 150, 200].map(resizeImageWidth.bind(null, image)));
     if(file.type.match(/image.*/)) {
-        processImage(file, (image) => [100, 150, 200].map(resizeImageWidth.bind(null, image)))
-          .then(([small, med, high]) => this.setState({
-            featuredImage: {
-              small,
-              med,
-              high
-            }
-          }));
+        getImage(file)
+          .then(resizeImage)
+          .then(([small, med, high]) => ({ featuredImage: { small, med, high} }))
+          .then(this.setState.bind(this));
     }
   }
 
@@ -102,7 +70,7 @@ export default class ArticleEditor extends Component {
     const { featuredImage } = this.state;
     let imageUrlSmall ;
     if (featuredImage) {
-      imageUrlSmall = URL.createObjectURL( featuredImage.med.data );
+      imageUrlSmall = URL.createObjectURL( featuredImage.small.data );
     }
     return (
       <div>
