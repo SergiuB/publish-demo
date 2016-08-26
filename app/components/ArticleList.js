@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import styles from './ArticleList.css';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
+import { removeArticle } from '../actions/articles';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class ArticleList extends Component {
 
   handleEditArticle(id) {
-    this.props.dispatch(push(`/${id}/edit`));
+    this.props.push(`/${id}/edit`);
+  }
+
+  handleRemoveArticle(id) {
+    this.props.removeArticle(id);
   }
 
   render() {
@@ -36,6 +44,14 @@ class ArticleList extends Component {
               primary={true}
               icon={<EditIcon />}
             />
+
+            <RaisedButton
+              label="Remove"
+              labelPosition="before"
+              onClick={this.handleRemoveArticle.bind(this, id)}
+              primary={true}
+              icon={<DeleteIcon />}
+            />
           </CardActions>
         </Card>
       )
@@ -54,4 +70,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ArticleList)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeArticle, push }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)

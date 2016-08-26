@@ -1,8 +1,9 @@
-import { ADD_ARTICLE, EDIT_ARTICLE } from '../actions/articles';
+import { ADD_ARTICLE, EDIT_ARTICLE, REMOVE_ARTICLE } from '../actions/articles';
 
 const generateId = () => Math.floor(Math.random() * 1000000);
 
 export default function articles(state = [], action) {
+  let index;
   switch (action.type) {
     case ADD_ARTICLE:
       return [...state, {
@@ -10,7 +11,7 @@ export default function articles(state = [], action) {
         ...action.articleData
       }];
     case EDIT_ARTICLE:
-      const index = state.findIndex(article => article.id === action.articleId);
+      index = state.findIndex(article => article.id === action.articleId);
       return [
         ...state.slice(0, index),
         ...state.slice(index + 1),
@@ -18,6 +19,13 @@ export default function articles(state = [], action) {
           id: action.articleId,
           ...action.articleData
         }
+      ]
+    case REMOVE_ARTICLE:
+      index = state.findIndex(article => article.id === action.articleId);
+      console.log(index, action.articleId);
+      return [
+        ...state.slice(0, index),
+        ...state.slice(index + 1)
       ]
     default:
       return state;
