@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -41,8 +43,8 @@ export default class ArticleEditor extends Component {
 
   handleChange() {
     this.props.onChange({
-      author: this._nameInput.value,
-      title: this._titleInput.value,
+      author: this._nameInput.getValue(),
+      title: this._titleInput.getValue(),
       featuredImage: this.state.featuredImage
     });
   }
@@ -77,17 +79,17 @@ export default class ArticleEditor extends Component {
       } catch(e) {}
     }
     return (
-      <div>
-        <input
-          type="text"
-          placeholder="Author"
+      <Paper zDepth={1} style={{ padding: 10}}>
+        <TextField
+          hintText="Author"
+          floatingLabelText="Author"
           value={author}
           ref={input => this._nameInput = input}
           onChange={this.handleChange}
         />
-        <input
-          type="text"
-          placeholder="Title"
+        <TextField
+          hintText="Title"
+          floatingLabelText="Title"
           value={title}
           ref={input => this._titleInput = input}
           onChange={this.handleChange}
@@ -103,7 +105,7 @@ export default class ArticleEditor extends Component {
           {imageUrl ? "Change picture" : "Add picture"}
         </button>
         {imageUrl && <img src={imageUrl} />}
-      </div>
+      </Paper>
     )
   }
 
