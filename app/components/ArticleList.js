@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import styles from './ArticleList.css';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import RaisedButton from 'material-ui/RaisedButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class ArticleList extends Component {
 
@@ -14,17 +17,27 @@ class ArticleList extends Component {
     const { articles } = this.props;
     const articleElement = ({ id, author, title, featuredImage }) => {
       let imageUrlSmall ;
-      if (featuredImage && featuredImage.small && featuredImage.small.data) {
+      if (featuredImage && featuredImage.high && featuredImage.high.data) {
         try {
-          imageUrlSmall = featuredImage.small.data;
+          imageUrlSmall = featuredImage.high.data;
         } catch(e) {}
       }
       return (
-        <div key={id}>
-          {imageUrlSmall && <img src={imageUrlSmall}/>}
-          <span>{`${title} (by ${author})`}</span>
-          <button type="button" onClick={this.handleEditArticle.bind(this, id)}>Edit</button>
-        </div>
+        <Card key={id} style={{ marginTop: '10' }}>
+          <CardMedia>
+            {imageUrlSmall && <img src={imageUrlSmall}/>}
+          </CardMedia>
+          <CardTitle title={title} subtitle={author}/>
+          <CardActions>
+            <RaisedButton
+              label="Edit"
+              labelPosition="before"
+              onClick={this.handleEditArticle.bind(this, id)}
+              primary={true}
+              icon={<EditIcon />}
+            />
+          </CardActions>
+        </Card>
       )
     };
     return (

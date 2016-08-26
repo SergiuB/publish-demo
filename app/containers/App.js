@@ -7,7 +7,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ width: '50%', margin: '0 auto'}}>
         {this.props.children}
       </div>
     );
