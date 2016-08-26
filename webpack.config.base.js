@@ -9,6 +9,10 @@ export default {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    },
+    {
+      test: /\.(eot|svg|ttf|woff|woff2)$/,
+      loader: 'file?name=assets/fonts/[name].[ext]'
     }]
   },
   output: {
