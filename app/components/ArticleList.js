@@ -7,8 +7,6 @@ import { removeArticle } from '../actions/articles';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-
-
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class ArticleList extends Component {
@@ -31,7 +29,7 @@ class ArticleList extends Component {
         } catch(e) {}
       }
       return (
-        <Card key={id} style={{ marginTop: 10 }}>
+        <Card key={id} style={{ marginBottom: 10 }}>
           <CardMedia>
             {imageUrlSmall && <img src={imageUrlSmall}/>}
           </CardMedia>

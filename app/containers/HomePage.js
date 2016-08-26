@@ -7,8 +7,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import ArticleList from '../components/ArticleList';
 
-import AppBar from 'material-ui/AppBar';
-
 const style = {
     margin: 0,
     top: 'auto',
@@ -27,10 +25,6 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <AppBar
-          title="Latest articles"
-          showMenuIconButton={false}
-        />
         <ArticleList />
 
         <FloatingActionButton secondary={true} style={style} onClick={this.handleCreateArticle.bind(this)} >
