@@ -3,6 +3,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -38,30 +40,39 @@ export default class ArticleEditor extends Component {
   handleChange = this.handleChange.bind(this);
   handleImage = this.handleImage.bind(this);
   handleAddPicture = this.handleAddPicture.bind(this);
+  handleLicenseChange = this.handleLicenseChange.bind(this);
+  setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
 
   state = {
-    featuredImage: null
+    featuredImage: null,
+    license: null,
   }
 
   handleChange() {
+    console.log(this._licenseSelect);
     this.props.onChange({
       author: this._nameInput.getValue(),
       title: this._titleInput.getValue(),
       content: this._contentInput.getValue(),
+      license: this.state.license,
       featuredImage: this.state.featuredImage
     });
+  }
+
+  handleLicenseChange(event, index, value) {
+    this.setStateP({ license: value })
+      .then(this.handleChange);
   }
 
   handleImage(event) {
     const file = event.target.files[0];
     const resizeImage = (image) => [100, 150, 200].map(resizeImageWidth.bind(null, image));
 
-    const setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
     if(file.type.match(/image.*/)) {
         getImage(file)
           .then(resizeImage)
           .then(([small, med, high]) => ({ featuredImage: { small, med, high} }))
-          .then(setStateP)
+          .then(this.setStateP)
           .then(this.handleChange);
     }
   }
@@ -73,7 +84,7 @@ export default class ArticleEditor extends Component {
   }
 
   render() {
-    const { author, title, content } = this.props.article;
+    const { author, title, content, license } = this.props.article;
     const { featuredImage } = this.state;
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
@@ -113,6 +124,18 @@ export default class ArticleEditor extends Component {
           onChange={this.handleChange}
         />
         <Divider />
+        <SelectField
+          hintText="License"
+          floatingLabelText="License"
+          underlineShow={false}
+          value={license}
+          onChange={this.handleLicenseChange}
+        >
+          <MenuItem value='all' primaryText="All Rights Reserved" />
+          <MenuItem value='some' primaryText="Some Rights Reserved" />
+          <MenuItem value='none' primaryText="No Rights Reserved" />
+        </SelectField>
+        <Divider />
         <input
           type="file"
           multiple accept="image/*"
@@ -132,7 +155,7 @@ export default class ArticleEditor extends Component {
   }
 
   componentWillMount() {
-    const { featuredImage } = this.props.article;
-    this.setState({ featuredImage });
+    const { featuredImage, license } = this.props.article;
+    this.setState({ featuredImage, license });
   }
 }

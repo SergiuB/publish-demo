@@ -15,7 +15,9 @@ class AddArticlePage extends Component {
   state = {
     article: {
       author: '',
-      title: ''
+      title: '',
+      content: '',
+      license: 'none'
     }
   };
 
