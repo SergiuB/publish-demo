@@ -12,12 +12,19 @@ class ArticleList extends Component {
 
   render() {
     const { articles } = this.props;
-    const articleElement = ({ id, author, title}) => (
-      <div key={id}>
-        <span>{`${title} (by ${author})`}</span>
-        <button type="button" onClick={this.handleEditArticle.bind(this, id)}>Edit</button>
-      </div>
-    )
+    const articleElement = ({ id, author, title, featuredImage }) => {
+      let imageUrlSmall ;
+      if (featuredImage) {
+        imageUrlSmall = URL.createObjectURL( featuredImage.small.data );
+      }
+      return (
+        <div key={id}>
+          {imageUrlSmall && <img src={imageUrlSmall}/>}
+          <span>{`${title} (by ${author})`}</span>
+          <button type="button" onClick={this.handleEditArticle.bind(this, id)}>Edit</button>
+        </div>
+      )
+    };
     return (
       <div>
         { articles.map(articleElement) }

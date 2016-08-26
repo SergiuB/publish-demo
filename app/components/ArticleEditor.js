@@ -15,10 +15,10 @@ const resizeImageWidth = (image, maxWidth) => {
     .getContext('2d')
     .drawImage(image, 0, 0, width, height);
   const dataUrl = canvas.toDataURL('image/jpeg');
+
   return blobUtil.dataURLToBlob(dataUrl)
     .then(data => ({ width, height, data }));
 }
-
 
 const getImage = (imageFile) => {
   return new Promise((resolve, reject) => {
@@ -44,18 +44,22 @@ export default class ArticleEditor extends Component {
   handleChange() {
     this.props.onChange({
       author: this._nameInput.value,
-      title: this._titleInput.value
+      title: this._titleInput.value,
+      featuredImage: this.state.featuredImage
     });
   }
 
   handleImage(event) {
     const file = event.target.files[0];
     const resizeImage = (image) => Promise.all([100, 150, 200].map(resizeImageWidth.bind(null, image)));
+
+    const setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
     if(file.type.match(/image.*/)) {
         getImage(file)
           .then(resizeImage)
           .then(([small, med, high]) => ({ featuredImage: { small, med, high} }))
-          .then(this.setState.bind(this));
+          .then(setStateP)
+          .then(this.handleChange);
     }
   }
 
@@ -68,9 +72,9 @@ export default class ArticleEditor extends Component {
   render() {
     const { author, title } = this.props.article;
     const { featuredImage } = this.state;
-    let imageUrlSmall ;
+    let imageUrl ;
     if (featuredImage) {
-      imageUrlSmall = URL.createObjectURL( featuredImage.small.data );
+      imageUrl = URL.createObjectURL( featuredImage.high.data );
     }
     return (
       <div>
@@ -95,9 +99,16 @@ export default class ArticleEditor extends Component {
           ref={input => this._fileInput = input}
           onChange={this.handleImage}
         />
-        <button type="button" onClick={this.handleAddPicture}>Add picture</button>
-        {imageUrlSmall && <img src={imageUrlSmall} />}
+        <button type="button" onClick={this.handleAddPicture}>
+          {featuredImage ? "Change picture" : "Add picture"}
+        </button>
+        {imageUrl && <img src={imageUrl} />}
       </div>
     )
+  }
+
+  componentWillMount() {
+    const { featuredImage } = this.props.article;
+    this.setState({ featuredImage });
   }
 }
