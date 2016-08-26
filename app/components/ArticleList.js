@@ -31,7 +31,7 @@ class ArticleList extends Component {
         } catch(e) {}
       }
       return (
-        <Card key={id} style={{ marginTop: '10' }}>
+        <Card key={id} style={{ marginTop: 10 }}>
           <CardMedia>
             {imageUrlSmall && <img src={imageUrlSmall}/>}
           </CardMedia>
