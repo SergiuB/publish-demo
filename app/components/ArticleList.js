@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styles from './ArticleList.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
@@ -30,11 +29,12 @@ class ArticleList extends Component {
       }
       return (
         <Card key={id} style={{ marginBottom: 10 }}>
-          <CardMedia>
+          <CardMedia
+            overlay={<CardTitle title={title} subtitle={author}/>}
+          >
             {imageUrlSmall && <img src={imageUrlSmall}/>}
           </CardMedia>
-          <CardTitle title={title} subtitle={author}/>
-          <CardActions>
+          <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
             <RaisedButton
               label="Edit"
               labelPosition="before"
@@ -42,12 +42,10 @@ class ArticleList extends Component {
               primary={true}
               icon={<EditIcon />}
             />
-
             <RaisedButton
               label="Remove"
               labelPosition="before"
               onClick={this.handleRemoveArticle.bind(this, id)}
-              primary={true}
               icon={<DeleteIcon />}
             />
           </CardActions>

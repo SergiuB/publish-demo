@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -76,7 +78,7 @@ export default class ArticleEditor extends Component {
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
       try {
-        imageUrl = featuredImage.med.data;
+        imageUrl = featuredImage.high.data;
       } catch(e) {}
     }
     return (
@@ -84,26 +86,33 @@ export default class ArticleEditor extends Component {
         <TextField
           hintText="Author"
           floatingLabelText="Author"
+          underlineShow={false}
           value={author}
           ref={input => this._nameInput = input}
           onChange={this.handleChange}
         />
+        <Divider />
         <TextField
           hintText="Title"
           floatingLabelText="Title"
+          underlineShow={false}
           value={title}
           ref={input => this._titleInput = input}
           onChange={this.handleChange}
         />
+        <Divider />
         <TextField
           hintText="Content"
           floatingLabelText="Content"
+          underlineShow={false}
           multiLine={true}
+          style={{ width: '100%' }}
           rows={2}
           value={content}
           ref={input => this._contentInput = input}
           onChange={this.handleChange}
         />
+        <Divider />
         <input
           type="file"
           multiple accept="image/*"
@@ -111,10 +120,13 @@ export default class ArticleEditor extends Component {
           ref={input => this._fileInput = input}
           onChange={this.handleImage}
         />
-        <button type="button" onClick={this.handleAddPicture}>
-          {imageUrl ? "Change picture" : "Add picture"}
-        </button>
-        {imageUrl && <img src={imageUrl} />}
+        <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: 10 }}>
+          {imageUrl && <img src={imageUrl} style={{ marginRight: 10 }}/>}
+          <RaisedButton
+            label={imageUrl ? "Change picture" : "Add picture"}
+            onClick={this.handleAddPicture}
+          />
+        </div>
       </Paper>
     )
   }

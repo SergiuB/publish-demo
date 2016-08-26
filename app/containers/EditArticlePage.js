@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { editArticle } from '../actions/articles';
 import ArticleEditor from '../components/ArticleEditor';
@@ -39,8 +40,10 @@ class EditArticlePage extends Component {
     return (
       <div>
         <ArticleEditor article={article} onChange={this.handleArticleChange}/>
-        <button type="button" onClick={this.handleOk}>Ok</button>
-        <button type="button" onClick={this.goBackHome}>Cancel</button>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10}}>
+          <RaisedButton label='Ok' primary={true} onClick={this.handleOk} />
+          <RaisedButton label="Cancel" style={{ marginLeft: 10 }} onClick={this.goBackHome} />
+        </div>
       </div>
     );
   }
