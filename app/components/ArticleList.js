@@ -52,9 +52,15 @@ class ArticleList extends Component {
         </Card>
       )
     };
+    const showEmptyText = !articles || !articles.length;
     return (
       <div>
-        { articles.map(articleElement) }
+        {showEmptyText && (
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            We have no articles to show you, help us create one!
+          </div>
+        )}
+        {articles.map(articleElement)}
       </div>
     );
   }
