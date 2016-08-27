@@ -8,7 +8,7 @@ const cardStyle = { marginBottom: 10 };
 const cardActionsStyle = { display: 'flex', justifyContent: 'center' };
 
 export default function ArticleCard({ article, onEdit, onRemove }) {
-  const { id, author, title, featuredImage } = article;
+  const { id, author, title, publishingDate, featuredImage } = article;
   let imageUrl ;
   if (featuredImage && featuredImage.high && featuredImage.high.data) {
     imageUrl = featuredImage.high.data;
@@ -16,7 +16,11 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
   return (
     <Card key={id} style={cardStyle}>
       <CardMedia
-        overlay={<CardTitle title={title} subtitle={author}/>}
+        overlay={
+          <CardTitle
+            title={title}
+            subtitle={`${author} (publishing date: ${new Date(publishingDate).toDateString()})`}
+          />}
       >
         {imageUrl && <img src={imageUrl}/>}
       </CardMedia>

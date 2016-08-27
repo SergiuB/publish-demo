@@ -5,6 +5,15 @@ import { push } from 'react-router-redux';
 import { removeArticle } from '../actions/articles';
 import ArticleCard from './ArticleCard';
 
+// compare two articles by their date
+const byDate = (article1, article2) => {
+  const [d1, d2] = [
+    Date.parse(article1.publishingDate),
+    Date.parse(article2.publishingDate)
+  ];
+  return d1 - d2;
+}
+
 class ArticleList extends Component {
 
   render() {
@@ -17,14 +26,17 @@ class ArticleList extends Component {
             We have no articles to show you, help us create one!
           </div>
         )}
-        {articles.map(article => (
-          <ArticleCard
-            key={article.id}
-            article={article}
-            onEdit={id => push(`/${id}/edit`)}
-            onRemove={id => removeArticle(id)}
-          />
-        ))}
+        {articles
+          .sort(byDate)
+          .map(article => (
+            <ArticleCard
+              key={article.id}
+              article={article}
+              onEdit={id => push(`/${id}/edit`)}
+              onRemove={id => removeArticle(id)}
+            />
+          ))
+          }
       </div>
     );
   }
