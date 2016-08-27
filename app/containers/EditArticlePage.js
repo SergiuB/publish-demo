@@ -6,8 +6,6 @@ import { push } from 'react-router-redux';
 import { editArticle } from '../actions/articles';
 import ArticleEditDialog from '../containers/ArticleEditDialog';
 
-const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
-
 class EditArticlePage extends Component {
 
   render() {
@@ -25,7 +23,7 @@ class EditArticlePage extends Component {
 
 function mapStateToProps(state, ownProps) {
   const articleId = parseInt(ownProps.params.articleId, 10);
-  const article = state.articles.find(article => article.id === articleId);
+  const article = state.articles.find(art => art.id === articleId);
   return {
     article
   };
@@ -35,4 +33,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ editArticle, push }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditArticlePage)
+export default connect(mapStateToProps, mapDispatchToProps)(EditArticlePage);

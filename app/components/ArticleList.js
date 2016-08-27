@@ -12,7 +12,7 @@ const byDate = (article1, article2) => {
     Date.parse(article2.publishingDate)
   ];
   return d1 - d2;
-}
+};
 
 class ArticleList extends Component {
 
@@ -71,4 +71,4 @@ ArticleList.defaultProps = {
   removeArticle: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);

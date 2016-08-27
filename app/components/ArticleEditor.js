@@ -1,4 +1,4 @@
-import React, { Component , PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -8,13 +8,15 @@ import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import { getImage, resizeImageWidth } from '../util/image';
 
-const style = { padding: 10};
+const style = { padding: 10 };
 const textInputStyle = { width: '100%' };
 const imageHolderStyle = { display: 'flex', alignItems: 'flex-start', marginTop: 10 };
 const errorStyle = { fontSize: 12, lineHeight: 12, color: 'rgb(244, 67, 54)' };
 
 
 export default class ArticleEditor extends Component {
+  // promisify setState
+  setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
   handleChange = this.handleChange.bind(this);
   handleImage = this.handleImage.bind(this);
   handleAddPicture = this.handleAddPicture.bind(this);
@@ -23,8 +25,6 @@ export default class ArticleEditor extends Component {
   handleAuthorChange = this.handleAuthorChange.bind(this);
   handleTitleChange = this.handleTitleChange.bind(this);
   handleContentChange = this.handleContentChange.bind(this);
-  // promisify setState
-  setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
 
   handleChange() {
     this.props.onChange({ ...this.state });
@@ -59,17 +59,17 @@ export default class ArticleEditor extends Component {
     const file = event.target.files[0];
     const resizeImage = (image) => [100, 150, 200].map(resizeImageWidth.bind(null, image));
 
-    if(file.type.match(/image.*/)) {
-        getImage(file)
-          .then(resizeImage)
-          .then(([small, med, high]) => ({ featuredImage: { small, med, high} }))
-          .then(this.setStateP)
-          .then(this.handleChange);
+    if (file.type.match(/image.*/)) {
+      getImage(file)
+        .then(resizeImage)
+        .then(([small, med, high]) => ({ featuredImage: { small, med, high } }))
+        .then(this.setStateP)
+        .then(this.handleChange);
     }
   }
 
   handleAddPicture() {
-    this._fileInput && this._fileInput.click();
+    this.fileInput && this.fileInput.click();
   }
 
   componentWillMount() {
@@ -82,7 +82,7 @@ export default class ArticleEditor extends Component {
     const { featuredImage } = this.state;
 
     // show the medium resolution image in the preview
-    let imageUrl ;
+    let imageUrl;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
       imageUrl = featuredImage.med.data;
     }
@@ -112,7 +112,7 @@ export default class ArticleEditor extends Component {
           hintText="Content"
           floatingLabelText="Content"
           underlineShow={false}
-          multiLine={true}
+          multiLine
           style={textInputStyle}
           rows={1}
           value={content}
@@ -127,9 +127,9 @@ export default class ArticleEditor extends Component {
           value={license}
           onChange={this.handleLicenseChange}
         >
-          <MenuItem value='all' primaryText="All Rights Reserved" />
-          <MenuItem value='some' primaryText="Some Rights Reserved" />
-          <MenuItem value='none' primaryText="No Rights Reserved" />
+          <MenuItem value="all" primaryText="All Rights Reserved" />
+          <MenuItem value="some" primaryText="Some Rights Reserved" />
+          <MenuItem value="none" primaryText="No Rights Reserved" />
         </SelectField>
         <Divider />
         <DatePicker
@@ -143,20 +143,20 @@ export default class ArticleEditor extends Component {
         <input
           type="file"
           multiple accept="image/*"
-          style={{ display: 'none'}}
-          ref={input => this._fileInput = input}
+          style={{ display: 'none' }}
+          ref={input => { this.fileInput = input; }}
           onChange={this.handleImage}
         />
         <div style={imageHolderStyle}>
           {errors.featuredImage && <div style={errorStyle}>{errors.featuredImage}</div>}
-          {imageUrl && <img src={imageUrl} style={{ marginRight: 10 }}/>}
+          {imageUrl && <img role="presentation" src={imageUrl} style={{ marginRight: 10 }} />}
           <RaisedButton
-            label={imageUrl ? "Change picture" : "Add picture"}
+            label={imageUrl ? 'Change picture' : 'Add picture'}
             onClick={this.handleAddPicture}
           />
         </div>
       </Paper>
-    )
+    );
   }
 }
 

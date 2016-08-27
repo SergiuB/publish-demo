@@ -1,15 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardMedia, CardTitle } from 'material-ui/Card';
 
 const cardStyle = { marginBottom: 10 };
 const cardActionsStyle = { display: 'flex', justifyContent: 'center' };
 
 export default function ArticleCard({ article, onEdit, onRemove }) {
   const { id, author, title, publishingDate, featuredImage } = article;
-  let imageUrl ;
+  let imageUrl;
   if (featuredImage && featuredImage.high && featuredImage.high.data) {
     imageUrl = featuredImage.high.data;
   }
@@ -22,14 +22,14 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
             subtitle={`${author} (publishing date: ${new Date(publishingDate).toDateString()})`}
           />}
       >
-        {imageUrl && <img src={imageUrl}/>}
+        {imageUrl && <img role="presentation" src={imageUrl} />}
       </CardMedia>
       <CardActions style={cardActionsStyle}>
         <RaisedButton
           label="Edit"
           labelPosition="before"
           onClick={() => onEdit(id)}
-          primary={true}
+          primary
           icon={<EditIcon />}
         />
         <RaisedButton
@@ -40,7 +40,7 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
         />
       </CardActions>
     </Card>
-  )
+  );
 }
 
 ArticleCard.propTypes = {

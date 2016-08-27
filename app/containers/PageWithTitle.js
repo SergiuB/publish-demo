@@ -8,8 +8,8 @@ const pageWithTitle = (title, InnerComponent) => (props) => (
       showMenuIconButton={false}
       style={{ marginBottom: 10 }}
     />
-    <InnerComponent {...props}/>
+    <InnerComponent {...props} />
   </div>
-)
+);
 
 export default pageWithTitle;

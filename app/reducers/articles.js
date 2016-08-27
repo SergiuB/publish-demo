@@ -19,14 +19,13 @@ export default function articles(state = [], action) {
           id: action.articleId,
           ...action.articleData
         }
-      ]
+      ];
     case REMOVE_ARTICLE:
       index = state.findIndex(article => article.id === action.articleId);
-      console.log(index, action.articleId);
       return [
         ...state.slice(0, index),
         ...state.slice(index + 1)
-      ]
+      ];
     default:
       return state;
   }

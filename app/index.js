@@ -5,9 +5,9 @@ import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import routes from './routes';
 import configureStore from './store/configureStore';
-import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './app.global.css';
 
 // Needed for onTouchTap

@@ -24,7 +24,8 @@ class AddArticlePage extends Component {
       <ArticleEditDialog
         article={article}
         onOk={addArticle}
-        onClose={() => push('/')} />
+        onClose={() => push('/')}
+      />
     );
   }
 }
@@ -33,4 +34,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ addArticle, push }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(AddArticlePage)
+export default connect(null, mapDispatchToProps)(AddArticlePage);

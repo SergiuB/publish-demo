@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 
-const style = { width: '66%', margin: '0 auto'};
+const style = { width: '66%', margin: '0 auto' };
 
 export default class App extends Component {
   static propTypes = {
