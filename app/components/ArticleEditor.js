@@ -11,6 +11,8 @@ import { getImage, resizeImageWidth } from '../util/image';
 const style = { padding: 10};
 const textInputStyle = { width: '100%' };
 const imageHolderStyle = { display: 'flex', alignItems: 'flex-start', marginTop: 10 };
+const errorStyle = { fontSize: 12, lineHeight: 12, color: 'rgb(244, 67, 54)' };
+
 
 export default class ArticleEditor extends Component {
   handleChange = this.handleChange.bind(this);
@@ -146,6 +148,7 @@ export default class ArticleEditor extends Component {
           onChange={this.handleImage}
         />
         <div style={imageHolderStyle}>
+          {errors.featuredImage && <div style={errorStyle}>{errors.featuredImage}</div>}
           {imageUrl && <img src={imageUrl} style={{ marginRight: 10 }}/>}
           <RaisedButton
             label={imageUrl ? "Change picture" : "Add picture"}

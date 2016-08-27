@@ -28,11 +28,13 @@ export default class ArticleEditDialog extends Component {
   }
 
   getErrors(article) {
-    const { author, title, content } = article;
+    const { author, title, content, featuredImage } = article;
     let errors = {};
     !author && (errors = {...errors, author: 'Author name cannot be empty'});
     !title && (errors = {...errors, title: 'Title name cannot be empty'});
     !content && (errors = {...errors, content: 'Content name cannot be empty'});
+    (!featuredImage || isEmpty(featuredImage))
+      && (errors = {...errors, featuredImage: 'Must add a featured image'});
     return errors;
   }
 
