@@ -23,6 +23,7 @@ Demo article publishing application based on
 * material-ui provides the widgets
 * resizing the images client side is done using a canvas element
 * resized images are saved as data URL strings (base64). Saving them as ArrayBuffer or Blob would have complicated the serialization in localStorage as these objects don't have a toString implementation
+* the "high res" 200px image is shown on the card (yeah, it does not look to good) and the med res 150px image is shown in the article editor
 
 ## Install
 
