@@ -133,7 +133,7 @@ export default class ArticleEditor extends Component {
           underlineShow={false}
           multiLine={true}
           style={{ width: '100%' }}
-          rows={2}
+          rows={1}
           value={content}
           onChange={this.handleContentChange}
         />
@@ -153,6 +153,7 @@ export default class ArticleEditor extends Component {
         <DatePicker
           hintText="Publishing Date"
           floatingLabelText="Publishing Date"
+          underlineShow={false}
           value={new Date(publishingDate)}
           onChange={this.handleDateChange}
         />
