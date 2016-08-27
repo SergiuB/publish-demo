@@ -95,6 +95,7 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Title"
           underlineShow={false}
           value={title}
+          errorText={errors.title}
           onChange={this.handleTitleChange}
         />
         <Divider />
@@ -106,6 +107,7 @@ export default class ArticleEditor extends Component {
           style={{ width: '100%' }}
           rows={1}
           value={content}
+          errorText={errors.content}
           onChange={this.handleContentChange}
         />
         <Divider />

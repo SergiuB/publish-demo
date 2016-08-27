@@ -16,16 +16,21 @@ export default class ArticleEditDialog extends Component {
   }
 
   handleOk() {
-    if (!isEmpty(this.getErrors(this.state.article)))
+    const errors = this.getErrors(this.state.article);
+    if (!isEmpty(errors)) {
+      this.setState({ errors });
       return;
+    }
     this.props.onOk(this.state.article);
     this.props.onClose();
   }
 
   getErrors(article) {
-    const { author } = article;
+    const { author, title, content } = article;
     let errors = {};
     !author && (errors = {...errors, author: 'Author name cannot be empty'});
+    !title && (errors = {...errors, title: 'Title name cannot be empty'});
+    !content && (errors = {...errors, content: 'Content name cannot be empty'});
     return errors;
   }
 
