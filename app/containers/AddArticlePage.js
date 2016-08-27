@@ -17,7 +17,8 @@ class AddArticlePage extends Component {
       author: '',
       title: '',
       content: '',
-      license: 'none'
+      license: 'none',
+      publishingDate: (new Date()).toString(),
     }
   };
 

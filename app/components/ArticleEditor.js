@@ -5,6 +5,7 @@ import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 
 const resizeImageWidth = (image, maxWidth) => {
   const canvas = document.createElement('canvas');
@@ -41,11 +42,13 @@ export default class ArticleEditor extends Component {
   handleImage = this.handleImage.bind(this);
   handleAddPicture = this.handleAddPicture.bind(this);
   handleLicenseChange = this.handleLicenseChange.bind(this);
+  handleDateChange = this.handleDateChange.bind(this);
   setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
 
   state = {
     featuredImage: null,
     license: null,
+    publishingDate: null
   }
 
   handleChange() {
@@ -55,12 +58,18 @@ export default class ArticleEditor extends Component {
       title: this._titleInput.getValue(),
       content: this._contentInput.getValue(),
       license: this.state.license,
+      publishingDate: this.state.publishingDate,
       featuredImage: this.state.featuredImage
     });
   }
 
   handleLicenseChange(event, index, value) {
     this.setStateP({ license: value })
+      .then(this.handleChange);
+  }
+
+  handleDateChange(event, date) {
+    this.setStateP({ publishingDate: date.toString() })
       .then(this.handleChange);
   }
 
@@ -84,7 +93,7 @@ export default class ArticleEditor extends Component {
   }
 
   render() {
-    const { author, title, content, license } = this.props.article;
+    const { author, title, content, license, publishingDate } = this.props.article;
     const { featuredImage } = this.state;
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
@@ -136,6 +145,13 @@ export default class ArticleEditor extends Component {
           <MenuItem value='none' primaryText="No Rights Reserved" />
         </SelectField>
         <Divider />
+        <DatePicker
+          hintText="Publishing Date"
+          floatingLabelText="Publishing Date"
+          value={new Date(publishingDate)}
+          onChange={this.handleDateChange}
+        />
+        <Divider />
         <input
           type="file"
           multiple accept="image/*"
@@ -155,7 +171,7 @@ export default class ArticleEditor extends Component {
   }
 
   componentWillMount() {
-    const { featuredImage, license } = this.props.article;
-    this.setState({ featuredImage, license });
+    const { featuredImage, license, publishingDate } = this.props.article;
+    this.setState({ featuredImage, license, publishingDate });
   }
 }
