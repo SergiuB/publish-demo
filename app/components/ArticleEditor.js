@@ -100,6 +100,7 @@ export default class ArticleEditor extends Component {
 
   render() {
     const { author, title, content, license, publishingDate } = this.props.article;
+    const { errors } = this.props;
     const { featuredImage } = this.state;
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
@@ -114,6 +115,7 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Author"
           underlineShow={false}
           value={author}
+          errorText={errors.author}
           onChange={this.handleAuthorChange}
         />
         <Divider />

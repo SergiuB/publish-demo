@@ -7,12 +7,22 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { editArticle } from '../actions/articles';
 import ArticleEditor from '../components/ArticleEditor';
 
+const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
+
 class EditArticlePage extends Component {
   handleArticleChange = this.handleArticleChange.bind(this);
   handleOk = this.handleOk.bind(this);
   goBackHome = this.goBackHome.bind(this);
+  getErrors = this.getErrors.bind(this);
+
+  state = {
+    article: {},
+    errors: {},
+  }
 
   handleOk() {
+    if (!isEmpty(this.getErrors(this.state.article)))
+      return;
     this.props.editArticle(this.props.article.id, this.state.article);
     this.goBackHome();
   }
@@ -21,25 +31,31 @@ class EditArticlePage extends Component {
     this.props.push('/');
   }
 
+  getErrors(article) {
+    const { author } = article;
+    let errors = {};
+    !author && (errors = {...errors, author: 'Author name cannot be empty'});
+    return errors;
+  }
+
   handleArticleChange(changedArticle) {
     this.setState({
-      article: changedArticle
+      article: changedArticle,
+      errors: this.getErrors(changedArticle)
     })
   }
 
   componentWillMount() {
     this.setState({
-      article: {
-        ...this.props.article
-      }
+      article: { ...this.props.article }
     });
   }
 
   render() {
-    const { article } = this.state;
+    const { article, errors } = this.state;
     return (
       <div>
-        <ArticleEditor article={article} onChange={this.handleArticleChange}/>
+        <ArticleEditor article={article} errors={errors} onChange={this.handleArticleChange}/>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10}}>
           <RaisedButton label='Ok' primary={true} onClick={this.handleOk} />
           <RaisedButton label="Cancel" style={{ marginLeft: 10 }} onClick={this.goBackHome} />
