@@ -3,6 +3,27 @@
 Demo article publishing application based on
 [Electron](http://electron.atom.io/), [React](https://facebook.github.io/react/), [Redux](https://github.com/reactjs/redux), [React Router](https://github.com/reactjs/react-router), [Webpack](http://webpack.github.io/docs/), [React Transform HMR](https://github.com/gaearon/react-transform-hmr) for rapid application development
 
+## Features
+
+* see a list of articles rendered as Material UI cards
+* create a new article
+* remove an article
+* edit an article
+* for each article choose a photo, which is resized (client side) in 3 different dimensions
+* all articles are persisted in localStorage
+* validation for non-empty author, title, content and featuredImage fields
+
+## Technical details
+
+* state is managed by Redux
+* persistence of state in localStorage thanks to redux-localstorage
+* Roboto font is loaded locally thanks to roboto-fontface npm package
+* React Router manages navigation between the 3 pages: HomePage, AddArticlePage and EditArticlePage
+* react-router-redux keeps the URL in sync with the Redux store
+* material-ui provides the widgets
+* resizing the images client side is done using a canvas element
+* resized images are saved as data URL strings (base64). Saving them as ArrayBuffer or Blob would have complicated the serialization in localStorage as these objects don't have a toString implementation
+
 ## Install
 
 First, clone the repo via git:
@@ -16,7 +37,6 @@ And then install dependencies.
 ```bash
 $ cd publish-demo && npm install
 ```
-
 
 ## Run
 
