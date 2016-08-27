@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
@@ -38,3 +38,18 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
     </Card>
   )
 }
+
+ArticleCard.propTypes = {
+  article: PropTypes.shape({
+    id: PropTypes.number,
+    author: PropTypes.string,
+    title: PropTypes.string,
+    featuredImage: PropTypes.object
+  }).isRequired,
+  onEdit: PropTypes.func,
+  onRemove: PropTypes.func
+};
+ArticleCard.defaultProps = {
+  onEdit: () => {},
+  onRemove: () => {}
+};

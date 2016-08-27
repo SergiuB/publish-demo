@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
@@ -39,5 +39,24 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ removeArticle, push }, dispatch);
 }
+
+ArticleList.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    author: PropTypes.string,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    license: PropTypes.oneOf(['some', 'all', 'none']),
+    publishingDate: PropTypes.string,
+    featuredImage: PropTypes.object
+  })),
+  push: PropTypes.func,
+  removeArticle: PropTypes.func,
+};
+ArticleList.defaultProps = {
+  articles: [],
+  push: () => {},
+  removeArticle: () => {},
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)

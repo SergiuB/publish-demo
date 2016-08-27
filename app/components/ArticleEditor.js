@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component , PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -156,3 +156,26 @@ export default class ArticleEditor extends Component {
     )
   }
 }
+
+ArticleEditor.propTypes = {
+  article: PropTypes.shape({
+    id: PropTypes.number,
+    author: PropTypes.string,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    license: PropTypes.oneOf(['some', 'all', 'none']),
+    publishingDate: PropTypes.string,
+    featuredImage: PropTypes.object
+  }).isRequired,
+  errors: PropTypes.shape({
+    author: PropTypes.string,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    featuredImage: PropTypes.string
+  }),
+  onChange: PropTypes.func,
+};
+ArticleEditor.defaultProps = {
+  onChange: () => {},
+  errors: {},
+};
