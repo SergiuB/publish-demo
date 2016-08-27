@@ -31,8 +31,8 @@ export default class ArticleEditDialog extends Component {
     const { author, title, content, featuredImage } = article;
     let errors = {};
     !author && (errors = {...errors, author: 'Author name cannot be empty'});
-    !title && (errors = {...errors, title: 'Title name cannot be empty'});
-    !content && (errors = {...errors, content: 'Content name cannot be empty'});
+    !title && (errors = {...errors, title: 'Title cannot be empty'});
+    !content && (errors = {...errors, content: 'Content cannot be empty'});
     (!featuredImage || isEmpty(featuredImage))
       && (errors = {...errors, featuredImage: 'Must add a featured image'});
     return errors;
