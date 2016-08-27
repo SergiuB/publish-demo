@@ -43,24 +43,30 @@ export default class ArticleEditor extends Component {
   handleAddPicture = this.handleAddPicture.bind(this);
   handleLicenseChange = this.handleLicenseChange.bind(this);
   handleDateChange = this.handleDateChange.bind(this);
+  handleAuthorChange = this.handleAuthorChange.bind(this);
+  handleTitleChange = this.handleTitleChange.bind(this);
+  handleContentChange = this.handleContentChange.bind(this);
   setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
 
-  state = {
-    featuredImage: null,
-    license: null,
-    publishingDate: null
+  handleChange() {
+    this.props.onChange({
+      ...this.state
+    });
   }
 
-  handleChange() {
-    console.log(this._licenseSelect);
-    this.props.onChange({
-      author: this._nameInput.getValue(),
-      title: this._titleInput.getValue(),
-      content: this._contentInput.getValue(),
-      license: this.state.license,
-      publishingDate: this.state.publishingDate,
-      featuredImage: this.state.featuredImage
-    });
+  handleAuthorChange(event) {
+    this.setStateP({ author: event.target.value })
+      .then(this.handleChange);
+  }
+
+  handleTitleChange(event) {
+    this.setStateP({ title: event.target.value })
+      .then(this.handleChange);
+  }
+
+  handleContentChange(event) {
+    this.setStateP({ content: event.target.value })
+      .then(this.handleChange);
   }
 
   handleLicenseChange(event, index, value) {
@@ -108,8 +114,7 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Author"
           underlineShow={false}
           value={author}
-          ref={input => this._nameInput = input}
-          onChange={this.handleChange}
+          onChange={this.handleAuthorChange}
         />
         <Divider />
         <TextField
@@ -117,8 +122,7 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Title"
           underlineShow={false}
           value={title}
-          ref={input => this._titleInput = input}
-          onChange={this.handleChange}
+          onChange={this.handleTitleChange}
         />
         <Divider />
         <TextField
@@ -129,8 +133,7 @@ export default class ArticleEditor extends Component {
           style={{ width: '100%' }}
           rows={2}
           value={content}
-          ref={input => this._contentInput = input}
-          onChange={this.handleChange}
+          onChange={this.handleContentChange}
         />
         <Divider />
         <SelectField
@@ -171,7 +174,6 @@ export default class ArticleEditor extends Component {
   }
 
   componentWillMount() {
-    const { featuredImage, license, publishingDate } = this.props.article;
-    this.setState({ featuredImage, license, publishingDate });
+    this.setState({ ...this.props.article });
   }
 }
