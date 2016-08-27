@@ -4,6 +4,9 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
+const cardStyle = { marginBottom: 10 };
+const cardActionsStyle = { display: 'flex', justifyContent: 'center' };
+
 export default function ArticleCard({ article, onEdit, onRemove }) {
   const { id, author, title, featuredImage } = article;
   let imageUrl ;
@@ -11,13 +14,13 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
     imageUrl = featuredImage.high.data;
   }
   return (
-    <Card key={id} style={{ marginBottom: 10 }}>
+    <Card key={id} style={cardStyle}>
       <CardMedia
         overlay={<CardTitle title={title} subtitle={author}/>}
       >
         {imageUrl && <img src={imageUrl}/>}
       </CardMedia>
-      <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
+      <CardActions style={cardActionsStyle}>
         <RaisedButton
           label="Edit"
           labelPosition="before"

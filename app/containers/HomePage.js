@@ -16,24 +16,20 @@ const style = {
     position: 'fixed',
 };
 
-class HomePage extends Component {
+function HomePage(props) {
+  return (
+    <div>
+      <ArticleList />
+      <FloatingActionButton
+        secondary={true}
+        style={style}
+        onClick={() => props.dispatch(push('/create'))}
+      >
+        <ContentAdd />
+      </FloatingActionButton>
 
-  handleCreateArticle(id) {
-    this.props.dispatch(push(`/create`));
-  }
-
-  render() {
-    return (
-      <div>
-        <ArticleList />
-
-        <FloatingActionButton secondary={true} style={style} onClick={this.handleCreateArticle.bind(this)} >
-          <ContentAdd />
-        </FloatingActionButton>
-
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default connect()(HomePage)

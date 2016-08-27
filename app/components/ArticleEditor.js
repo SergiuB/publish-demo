@@ -8,6 +8,10 @@ import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import { getImage, resizeImageWidth } from '../util/image';
 
+const style = { padding: 10};
+const textInputStyle = { width: '100%' };
+const imageHolderStyle = { display: 'flex', alignItems: 'flex-start', marginTop: 10 };
+
 export default class ArticleEditor extends Component {
   handleChange = this.handleChange.bind(this);
   handleImage = this.handleImage.bind(this);
@@ -17,12 +21,11 @@ export default class ArticleEditor extends Component {
   handleAuthorChange = this.handleAuthorChange.bind(this);
   handleTitleChange = this.handleTitleChange.bind(this);
   handleContentChange = this.handleContentChange.bind(this);
+  // promisify setState
   setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
 
   handleChange() {
-    this.props.onChange({
-      ...this.state
-    });
+    this.props.onChange({ ...this.state });
   }
 
   handleAuthorChange(event) {
@@ -64,9 +67,7 @@ export default class ArticleEditor extends Component {
   }
 
   handleAddPicture() {
-    if (this._fileInput) {
-      this._fileInput.click();
-    }
+    this._fileInput && this._fileInput.click();
   }
 
   componentWillMount() {
@@ -84,11 +85,12 @@ export default class ArticleEditor extends Component {
       imageUrl = featuredImage.med.data;
     }
     return (
-      <Paper zDepth={1} style={{ padding: 10}}>
+      <Paper zDepth={1} style={style}>
         <TextField
           hintText="Author"
           floatingLabelText="Author"
           underlineShow={false}
+          style={textInputStyle}
           value={author}
           errorText={errors.author}
           onChange={this.handleAuthorChange}
@@ -98,6 +100,7 @@ export default class ArticleEditor extends Component {
           hintText="Title"
           floatingLabelText="Title"
           underlineShow={false}
+          style={textInputStyle}
           value={title}
           errorText={errors.title}
           onChange={this.handleTitleChange}
@@ -108,7 +111,7 @@ export default class ArticleEditor extends Component {
           floatingLabelText="Content"
           underlineShow={false}
           multiLine={true}
-          style={{ width: '100%' }}
+          style={textInputStyle}
           rows={1}
           value={content}
           errorText={errors.content}
@@ -142,7 +145,7 @@ export default class ArticleEditor extends Component {
           ref={input => this._fileInput = input}
           onChange={this.handleImage}
         />
-        <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: 10 }}>
+        <div style={imageHolderStyle}>
           {imageUrl && <img src={imageUrl} style={{ marginRight: 10 }}/>}
           <RaisedButton
             label={imageUrl ? "Change picture" : "Add picture"}

@@ -5,6 +5,8 @@ import ArticleEditor from '../components/ArticleEditor';
 
 const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
 
+const buttonContainerStyle = { display: 'flex', justifyContent: 'flex-end', marginTop: 10};
+
 export default class ArticleEditDialog extends Component {
   handleArticleChange = this.handleArticleChange.bind(this);
   handleOk = this.handleOk.bind(this);
@@ -53,7 +55,7 @@ export default class ArticleEditDialog extends Component {
     return (
       <div>
         <ArticleEditor article={article} errors={errors} onChange={this.handleArticleChange}/>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10}}>
+        <div style={buttonContainerStyle}>
           <RaisedButton label='Ok' primary={true} onClick={this.handleOk} />
           <RaisedButton label="Cancel" style={{ marginLeft: 10 }} onClick={onClose} />
         </div>

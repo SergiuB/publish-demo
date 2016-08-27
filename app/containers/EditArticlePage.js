@@ -9,21 +9,16 @@ import ArticleEditDialog from '../containers/ArticleEditDialog';
 const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
 
 class EditArticlePage extends Component {
-  handleOk = this.handleOk.bind(this);
-  goBackHome = this.goBackHome.bind(this);
-
-  handleOk(article) {
-    this.props.editArticle(this.props.article.id, article);
-  }
-
-  goBackHome() {
-    this.props.push('/');
-  }
 
   render() {
-    const { article } = this.props;
+    const { article, editArticle, push } = this.props;
+    const { id } = article;
     return (
-      <ArticleEditDialog article={article} onOk={this.handleOk} onClose={this.goBackHome} />
+      <ArticleEditDialog
+        article={article}
+        onOk={editedArticle => editArticle(id, editedArticle)}
+        onClose={() => push('/')}
+      />
     );
   }
 }

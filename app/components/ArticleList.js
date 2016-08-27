@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { removeArticle } from '../actions/articles';
-
 import ArticleCard from './ArticleCard';
 
 class ArticleList extends Component {
-  
+
   render() {
     const { articles, push, removeArticle } = this.props;
     const showEmptyText = !articles || !articles.length;

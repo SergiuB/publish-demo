@@ -7,9 +7,6 @@ import { addArticle } from '../actions/articles';
 import ArticleEditDialog from '../containers/ArticleEditDialog';
 
 class AddArticlePage extends Component {
-  handleOk = this.handleOk.bind(this);
-  goBackHome = this.goBackHome.bind(this);
-
   state = {
     article: {
       author: '',
@@ -20,19 +17,14 @@ class AddArticlePage extends Component {
     }
   };
 
-  handleOk(article) {
-    this.props.addArticle(article);
-    this.goBackHome();
-  }
-
-  goBackHome() {
-    this.props.push('/');
-  }
-
   render() {
     const { article } = this.state;
+    const { addArticle, push } = this.props;
     return (
-      <ArticleEditDialog article={article} onOk={this.handleOk} onClose={this.goBackHome} />
+      <ArticleEditDialog
+        article={article}
+        onOk={addArticle}
+        onClose={() => push('/')} />
     );
   }
 }
