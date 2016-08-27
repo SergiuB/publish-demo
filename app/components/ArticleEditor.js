@@ -69,15 +69,19 @@ export default class ArticleEditor extends Component {
     }
   }
 
+  componentWillMount() {
+    this.setState({ ...this.props.article });
+  }
+
   render() {
     const { author, title, content, license, publishingDate } = this.props.article;
     const { errors } = this.props;
     const { featuredImage } = this.state;
+
+    // show the medium resolution image in the preview
     let imageUrl ;
     if (featuredImage && featuredImage.med && featuredImage.med.data) {
-      try {
-        imageUrl = featuredImage.high.data;
-      } catch(e) {}
+      imageUrl = featuredImage.med.data;
     }
     return (
       <Paper zDepth={1} style={{ padding: 10}}>
@@ -147,9 +151,5 @@ export default class ArticleEditor extends Component {
         </div>
       </Paper>
     )
-  }
-
-  componentWillMount() {
-    this.setState({ ...this.props.article });
   }
 }
