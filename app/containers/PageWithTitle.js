@@ -1,11 +1,10 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
+import TitleBar from '../components/TitleBar';
 
 const pageWithTitle = (title, InnerComponent) => (props) => (
   <div>
-    <AppBar
+    <TitleBar
       title={title}
-      showMenuIconButton={false}
       style={{ marginBottom: 10 }}
     />
     <InnerComponent {...props} />
