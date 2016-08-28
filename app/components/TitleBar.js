@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -57,4 +57,7 @@ TitleBar.defaultProps = {
   changeLanguage: () => {},
 };
 
-export default translate('TitleBar')(connect(mapStateToProps, mapDispatchToProps)(TitleBar));
+export default compose(
+                  translate('TitleBar'),
+                  connect(mapStateToProps, mapDispatchToProps)
+               )(TitleBar);
