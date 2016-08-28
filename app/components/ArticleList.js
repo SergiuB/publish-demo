@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { push } from 'react-router-redux';
 import { removeArticle } from '../actions/articles';
 import ArticleCard from './ArticleCard';
+import translate from './Translate';
 
 // compare two articles by their date
 const byDate = (article1, article2) => {
@@ -17,13 +18,13 @@ const byDate = (article1, article2) => {
 class ArticleList extends Component {
 
   render() {
-    const { articles, push, removeArticle } = this.props;
+    const { articles, push, removeArticle, strings } = this.props;
     const showEmptyText = !articles || !articles.length;
     return (
       <div>
         {showEmptyText && (
           <div style={{ width: '100%', textAlign: 'center' }}>
-            We have no articles to show you, help us create one!
+            {strings.emptyList}
           </div>
         )}
         {articles
@@ -64,6 +65,7 @@ ArticleList.propTypes = {
   })),
   push: PropTypes.func,
   removeArticle: PropTypes.func,
+  strings: PropTypes.object.isRequired
 };
 ArticleList.defaultProps = {
   articles: [],
@@ -71,4 +73,7 @@ ArticleList.defaultProps = {
   removeArticle: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);
+export default compose(
+                  translate('ArticleList'),
+                  connect(mapStateToProps, mapDispatchToProps)
+                )(ArticleList);

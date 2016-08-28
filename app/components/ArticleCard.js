@@ -4,10 +4,12 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import { Card, CardActions, CardMedia, CardTitle } from 'material-ui/Card';
 
+import translate from './Translate';
+
 const cardStyle = { marginBottom: 10 };
 const cardActionsStyle = { display: 'flex', justifyContent: 'center' };
 
-export default function ArticleCard({ article, onEdit, onRemove }) {
+function ArticleCard({ article, strings, onEdit, onRemove }) {
   const { id, author, title, publishingDate, featuredImage } = article;
   let imageUrl;
   if (featuredImage && featuredImage.high && featuredImage.high.data) {
@@ -26,14 +28,14 @@ export default function ArticleCard({ article, onEdit, onRemove }) {
       </CardMedia>
       <CardActions style={cardActionsStyle}>
         <RaisedButton
-          label="Edit"
+          label={strings.edit}
           labelPosition="before"
           onClick={() => onEdit(id)}
           primary
           icon={<EditIcon />}
         />
         <RaisedButton
-          label="Remove"
+          label={strings.remove}
           labelPosition="before"
           onClick={() => onRemove(id)}
           icon={<DeleteIcon />}
@@ -50,6 +52,7 @@ ArticleCard.propTypes = {
     title: PropTypes.string,
     featuredImage: PropTypes.object
   }).isRequired,
+  strings: PropTypes.object.isRequired,
   onEdit: PropTypes.func,
   onRemove: PropTypes.func
 };
@@ -57,3 +60,5 @@ ArticleCard.defaultProps = {
   onEdit: () => {},
   onRemove: () => {}
 };
+
+export default translate('ArticleCard')(ArticleCard);

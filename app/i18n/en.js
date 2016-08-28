@@ -10,6 +10,17 @@ export default {
   TitleBar: {
     listTitle: 'Latest Articles',
     editTitle: 'Edit Article',
-    addArticle: 'Add Article'
+    addTitle: 'Add Article'
+  },
+  ArticleCard: {
+    edit: 'Edit',
+    remove: 'Remove',
+  },
+  ArticleEditDialog: {
+    ok: 'Ok',
+    cancel: 'Cancel',
+  },
+  ArticleList: {
+    emptyList: 'We have no articles to show you, help us create one!'
   }
 };

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import ArticleEditor from '../components/ArticleEditor';
+import translate from '../components/Translate';
 
 const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
 
 const buttonContainerStyle = { display: 'flex', justifyContent: 'flex-end', marginTop: 10 };
 
-export default class ArticleEditDialog extends Component {
+class ArticleEditDialog extends Component {
   getErrors = this.getErrors.bind(this);
   handleArticleChange = this.handleArticleChange.bind(this);
   handleOk = this.handleOk.bind(this);
@@ -53,15 +54,17 @@ export default class ArticleEditDialog extends Component {
 
   render() {
     const { article, errors } = this.state;
-    const { onClose } = this.props;
+    const { onClose, strings } = this.props;
     return (
       <div>
         <ArticleEditor article={article} errors={errors} onChange={this.handleArticleChange} />
         <div style={buttonContainerStyle}>
-          <RaisedButton label="Ok" primary onClick={this.handleOk} />
-          <RaisedButton label="Cancel" style={{ marginLeft: 10 }} onClick={onClose} />
+          <RaisedButton label={strings.ok} primary onClick={this.handleOk} />
+          <RaisedButton label={strings.cancel} style={{ marginLeft: 10 }} onClick={onClose} />
         </div>
       </div>
     );
   }
 }
+
+export default translate('ArticleEditDialog')(ArticleEditDialog);
