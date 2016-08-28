@@ -134,8 +134,8 @@ class ArticleEditor extends Component {
         </SelectField>
         <Divider />
         <DatePicker
-          hintText="Publishing Date"
-          floatingLabelText="Publishing Date"
+          hintText={strings.publishingDate}
+          floatingLabelText={strings.publishingDate}
           underlineShow={false}
           value={new Date(publishingDate)}
           onChange={this.handleDateChange}
@@ -152,7 +152,7 @@ class ArticleEditor extends Component {
           {errors.featuredImage && <div style={errorStyle}>{errors.featuredImage}</div>}
           {imageUrl && <img role="presentation" src={imageUrl} style={{ marginRight: 10 }} />}
           <RaisedButton
-            label={imageUrl ? 'Change picture' : 'Add picture'}
+            label={imageUrl ? strings.changePicture : strings.addPicture}
             onClick={this.handleAddPicture}
           />
         </div>
@@ -187,6 +187,9 @@ ArticleEditor.defaultProps = {
     author: 'Author',
     title: 'Title',
     content: 'Content',
+    publishingDate: 'Publishing Date',
+    changePicture: 'Change Picture',
+    addPicture: 'Add Picture'
   }
 };
 
