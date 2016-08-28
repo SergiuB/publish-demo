@@ -12,7 +12,7 @@ Demo article publishing application based on
 * for each article choose a photo, which is resized (client side) in 3 different dimensions
 * all articles are persisted in localStorage
 * validation for non-empty author, title, content and featuredImage fields
-* INTERNATIONALIZATION SUPPORT - support switching between English and French
+* INTERNATIONALIZATION SUPPORT - use the menu in the title bar to switch between English and French
 
 ## Technical details
 
