@@ -8,13 +8,14 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import { changeLanguage } from '../actions/language';
+import translate from './Translate';
 
 class TitleBar extends Component {
   render() {
-    const { title, language, changeLanguage } = this.props;
+    const { title, language, changeLanguage, strings } = this.props;
     return (
       <AppBar
-        title={title}
+        title={strings[title]}
         showMenuIconButton={false}
         iconElementRight={
           <IconMenu
@@ -49,10 +50,11 @@ TitleBar.propTypes = {
   title: PropTypes.string.isRequired,
   language: PropTypes.string,
   changeLanguage: PropTypes.func,
+  strings: PropTypes.object.isRequired
 };
 TitleBar.defaultProps = {
   language: 'en',
   changeLanguage: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);
+export default translate('TitleBar')(connect(mapStateToProps, mapDispatchToProps)(TitleBar));
