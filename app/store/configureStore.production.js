@@ -9,7 +9,7 @@ const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
   applyMiddleware(thunk, router),
-  persistState('articles')
+  persistState('articles', 'language')
 );
 
 export default function configureStore(initialState) {

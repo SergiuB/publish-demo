@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import translate from './Translate';
 import { getImage, resizeImageWidth } from '../util/image';
 
 const style = { padding: 10 };
@@ -14,7 +15,7 @@ const imageHolderStyle = { display: 'flex', alignItems: 'flex-start', marginTop:
 const errorStyle = { fontSize: 12, lineHeight: 12, color: 'rgb(244, 67, 54)' };
 
 
-export default class ArticleEditor extends Component {
+class ArticleEditor extends Component {
   // promisify setState
   setStateP = (state) => new Promise((resolve) => this.setState(state, resolve));
   handleChange = this.handleChange.bind(this);
@@ -78,7 +79,7 @@ export default class ArticleEditor extends Component {
 
   render() {
     const { author, title, content, license, publishingDate } = this.props.article;
-    const { errors } = this.props;
+    const { errors, strings } = this.props;
     const { featuredImage } = this.state;
 
     // show the medium resolution image in the preview
@@ -89,8 +90,8 @@ export default class ArticleEditor extends Component {
     return (
       <Paper zDepth={1} style={style}>
         <TextField
-          hintText="Author"
-          floatingLabelText="Author"
+          hintText={strings.author}
+          floatingLabelText={strings.author}
           underlineShow={false}
           style={textInputStyle}
           value={author}
@@ -99,8 +100,8 @@ export default class ArticleEditor extends Component {
         />
         <Divider />
         <TextField
-          hintText="Title"
-          floatingLabelText="Title"
+          hintText={strings.title}
+          floatingLabelText={strings.title}
           underlineShow={false}
           style={textInputStyle}
           value={title}
@@ -109,8 +110,8 @@ export default class ArticleEditor extends Component {
         />
         <Divider />
         <TextField
-          hintText="Content"
-          floatingLabelText="Content"
+          hintText={strings.content}
+          floatingLabelText={strings.content}
           underlineShow={false}
           multiLine
           style={textInputStyle}
@@ -177,8 +178,16 @@ ArticleEditor.propTypes = {
     featuredImage: PropTypes.string
   }),
   onChange: PropTypes.func,
+  strings: PropTypes.object,
 };
 ArticleEditor.defaultProps = {
   onChange: () => {},
   errors: {},
+  strings: {
+    author: 'Author',
+    title: 'Title',
+    content: 'Content',
+  }
 };
+
+export default translate('ArticleEditor')(ArticleEditor);

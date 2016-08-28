@@ -22,7 +22,7 @@ const router = routerMiddleware(hashHistory);
 
 const enhancer = compose(
   applyMiddleware(thunk, router, logger),
-  persistState('articles'),
+  persistState(['articles', 'language']),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
     noop => noop
